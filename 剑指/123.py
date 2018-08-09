@@ -1,14 +1,17 @@
 # -*- coding:utf-8 -*-
 class Solution:
-    def multiply(self, A):
+    def maxInWindows(self, num, size):
         # write code here
-        tmp = 1
-        n = len(A)
         ans = []
-        for i in range(n):
-            tmp *= A[i]
-            ans.append(tmp)
-        return tmp
+        lenN = len(num)
+        if size > lenN:
+            return ans
+        ans.append(max(num[:size]))
+        n = 1
+        while n+size <= lenN:
+            ans.append(max(num[n:n+size]))
+            n += 1
+        return ans
 
 a = Solution()
-print(a.multiply([1,2,3,4,5]))
+print(a.maxInWindows([2,3,4,2,6,2,5,1],3))
