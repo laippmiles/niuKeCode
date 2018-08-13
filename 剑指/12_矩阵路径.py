@@ -30,6 +30,7 @@ class Solution:
         print(path[0])
 
         #底下先判断 向前或向上 再判断 向后向左
+        #好像c++就不用这样，很邪门
         if j + 1 < cols and matrix[i * cols + j + 1] == path[0]:
             print('right')
             return self.func(matrix, rows, cols, path[1:], i, j + 1)
