@@ -1,0 +1,29 @@
+/*
+题目描述
+查找所有已经分配部门的员工的last_name和first_name
+CREATE TABLE `dept_emp` (
+`emp_no` int(11) NOT NULL,
+`dept_no` char(4) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `employees` (
+`emp_no` int(11) NOT NULL,
+`birth_date` date NOT NULL,
+`first_name` varchar(14) NOT NULL,
+`last_name` varchar(16) NOT NULL,
+`gender` char(1) NOT NULL,
+`hire_date` date NOT NULL,
+PRIMARY KEY (`emp_no`));
+
+last_name  first_name  dept_no
+
+Facello     Georgi       d001
+*/
+
+select employees.last_name,employees.first_name,dept_emp.dept_no
+from employees,dept_emp
+--写成内联合也行，直接列两个表也有一个效果
+where employees.emp_no = dept_emp.emp_no
+--最简单的联合

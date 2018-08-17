@@ -1,0 +1,31 @@
+/*
+题目描述
+按照salary的累计和running_total，
+其中running_total为之前员工的salary累计和，
+其他以此类推。
+
+具体结果如下Demo展示。。
+CREATE TABLE `salaries` ( `emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+emp_no	salary	running_total
+10001  	88958     	88958
+10002	  72527	     161485
+10003	  43311	     204796
+10004	  74057	     278853
+*/
+
+select  e1.emp_no,e1.salary,sum(e2.salary) as running_total
+from salaries as e1,salaries as e2
+--用别名把一张表当两张用
+where e2.emp_no <= e1.emp_no
+--用这句话截子表
+and e1.to_date = '9999-01-01'
+and e2.to_date = '9999-01-01'
+--加入条件，确保e2日期和e1对得上
+group by e1.emp_no
+order by e1.emp_no
+--是通过emp_no分类的，并且记得用order by 确保是排序状态
