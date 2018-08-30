@@ -1,0 +1,37 @@
+/*
+获取所有员工当前的manager，
+如果当前的manager是自己的话结果不显示，当前表示to_date='9999-01-01'。
+
+结果第一列给出当前员工的emp_no,第二列给出其manager对应的manager_no。
+
+CREATE TABLE `dept_emp` (
+`emp_no` int(11) NOT NULL,
+`dept_no` char(4) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `dept_manager` (
+`dept_no` char(4) NOT NULL,
+`emp_no` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+emp_no      manager_no
+
+10001        10002
+
+10003        10004
+
+10009        10010
+*/
+
+select dept_emp.emp_no,dept_manager.emp_no manager_no
+from dept_emp ,dept_manager
+where dept_emp.dept_no = dept_manager.dept_no
+--关联两表的条件：员工的部门号相同
+      and dept_emp.emp_no != dept_manager.emp_no
+      --当前的manager是自己的话结果不显示
+      and dept_manager.to_date='9999-01-01'
+      --注意有些主管已经不干了，要加个当前时间限制
