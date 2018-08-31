@@ -1,0 +1,30 @@
+/*
+题目描述
+对于employees表中，给出奇数行的first_name
+CREATE TABLE `employees` (
+`emp_no` int(11) NOT NULL,
+`birth_date` date NOT NULL,
+`first_name` varchar(14) NOT NULL,
+`last_name` varchar(16) NOT NULL,
+`gender` char(1) NOT NULL,
+`hire_date` date NOT NULL,
+PRIMARY KEY (`emp_no`));
+
+first_name
+
+Georgi
+Chirstian
+Anneke
+Tzvetan
+Saniya
+Mary
+*/
+
+select e1.first_name
+from employees e1
+where (select count(*) from employees e2
+      where e2.first_name <= e1.first_name)%2 = 1
+--计算行号的方法 : 有多少个小于等于e2.first_name的记录的个数就是e2.first_name的行号
+--这个老实讲看不太懂为啥了
+
+--用了子表，即选出，使底下子查询成立的e1.first_name 为结果
