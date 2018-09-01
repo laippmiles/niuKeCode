@@ -1,0 +1,34 @@
+/*
+对所有员工的当前(to_date='9999-01-01')
+薪水按照salary进行按照1-N的排名，相同salary并列且按照emp_no升序排列
+
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+
+emp_no  salary  rank
+
+10005   94692     1
+10009   94409     2
+*/
+
+--本题的精髓在于 rank求取方法：s1.salary <= s2.salary，
+--意思是在输出s1.salary的情况下，有多少个s2.salary大于等于s1.salary
+
+select a.emp_no,a.salary,count(distinct b.salary) rank
+--distinct用来避免重复计算前面名次并列时多算了值
+--自己和自己联结，获得子表b
+--原理和60相似
+from salaries a,salaries b
+
+where a.to_date='9999-01-01'
+        and b.to_date='9999-01-01'
+        and a.salary <= b.salary
+group by a.emp_no
+--按员工号作分类依据
+order by rank
+--按排名来排序

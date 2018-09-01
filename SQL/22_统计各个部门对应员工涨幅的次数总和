@@ -1,0 +1,41 @@
+/*
+统计各个部门对应员工涨幅的次数总和，
+给出部门编码dept_no、部门名称dept_name以及次数sum
+
+CREATE TABLE `departments` (
+`dept_no` char(4) NOT NULL,
+`dept_name` varchar(40) NOT NULL,
+PRIMARY KEY (`dept_no`));
+
+CREATE TABLE `dept_emp` (
+`emp_no` int(11) NOT NULL,
+`dept_no` char(4) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+
+dept_no     dept_name      sum
+
+d001        Marketing       24
+d002         Finance        14
+*/
+
+select departments.dept_no,dept_name,count(salary) sum
+
+from departments ,dept_emp,salaries
+
+where departments.dept_no = dept_emp.dept_no
+    and dept_emp.emp_no = salaries.emp_no
+--用自然联结即可
+--每条工资算一个涨幅（即涨幅可为负数和0）
+
+group by dept_emp.dept_no
+--按部门分类

@@ -1,0 +1,38 @@
+/*
+查找所有员工自入职以来的薪水涨幅情况，
+给出员工编号emp_no以及其对应的薪水涨幅growth，并按照growth进行升序
+
+CREATE TABLE `employees` (
+`emp_no` int(11) NOT NULL,
+`birth_date` date NOT NULL,
+`first_name` varchar(14) NOT NULL,
+`last_name` varchar(16) NOT NULL,
+`gender` char(1) NOT NULL,
+`hire_date` date NOT NULL,
+PRIMARY KEY (`emp_no`));
+
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+emp_no      growth
+
+10011         0
+省略        省略
+10010       54496
+*/
+
+select a.emp_no , (b.salary - c.salary) growth
+
+from employees a
+    inner join salaries b
+    on a.emp_no = b.emp_no and b.to_date = '9999-01-01'
+    inner join salaries c
+    on a.emp_no = c.emp_no and c.from_date = a.hire_date
+
+--多重联立中间的表也可以取别名拿来用
+--inner join是过滤掉有Null的项的，left join则自动补足Null
+order by growth
