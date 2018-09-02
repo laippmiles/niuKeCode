@@ -1,0 +1,57 @@
+/*
+获取员工其当前的薪水比其manager当前薪水还高的相关信息，当前表示to_date='9999-01-01',
+结果第一列给出员工的emp_no，
+第二列给出其manager的manager_no，
+第三列给出该员工当前的薪水emp_salary,
+第四列给该员工对应的manager当前的薪水manager_salary
+
+CREATE TABLE `dept_emp` (
+`emp_no` int(11) NOT NULL,
+`dept_no` char(4) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `dept_manager` (
+`dept_no` char(4) NOT NULL,
+`emp_no` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+emp_no      manager_no       emp_salary     manager_salary
+
+10001         10002           88958           72527
+10009         10010           95409           94409
+*/
+
+/*
+本题主要思想是创建两张表（一张记录当前所有员工的工资，另一张只记录部门经理的工资）进行比较，具体思路如下：
+1、先用INNER JOIN连接salaries和demp_emp，建立当前所有员工的工资记录sem
+2、再用INNER JOIN连接salaries和demp_manager，建立当前所有员工的工资记录sdm
+3、最后用限制条件sem.dept_no = sdm.dept_no AND sem.salary > sdm.salary找出同一部门中工资比经理高的员工，
+并根据题意依次输出emp_no、manager_no、emp_salary、manager_salary*/
+select s1.emp_no,s2.emp_no manager_no,s1.salary emp_salary,s2.salary manager_salary
+--注意这里要起别名
+
+from
+
+(select dept_emp.emp_no,salary,dept_no from dept_emp,salaries
+where dept_emp.emp_no = salaries.emp_no and salaries.to_date = '9999-01-01')
+as s1,
+
+--不是同一个select的话可以重复用表，不会造成重用的样子
+(select dept_manager.emp_no,salary,dept_no from dept_manager,salaries
+where dept_manager.emp_no = salaries.emp_no and salaries.to_date = '9999-01-01')
+as s2
+
+where
+s1.dept_no = s2.dept_no and s1.salary > s2.salary
+--筛选条件

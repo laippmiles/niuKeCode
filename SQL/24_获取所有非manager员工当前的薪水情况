@@ -1,0 +1,51 @@
+/*
+获取所有非manager员工当前的薪水情况，
+给出dept_no、emp_no以及salary ，当前表示to_date='9999-01-01'
+
+CREATE TABLE `dept_emp` (
+`emp_no` int(11) NOT NULL,
+`dept_no` char(4) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `dept_manager` (
+`dept_no` char(4) NOT NULL,
+`emp_no` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `employees` (
+`emp_no` int(11) NOT NULL,
+`birth_date` date NOT NULL,
+`first_name` varchar(14) NOT NULL,
+`last_name` varchar(16) NOT NULL,
+`gender` char(1) NOT NULL,
+`hire_date` date NOT NULL,
+PRIMARY KEY (`emp_no`));
+
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+
+dept_no     emp_no      salary
+
+d001        10001       88958
+d004        10003       43311
+*/
+
+select dept_emp.dept_no,dept_emp.emp_no,salaries.salary
+from dept_emp,salaries
+--其实表不需要用全的
+where dept_emp.emp_no = salaries.emp_no
+    and dept_emp.to_date ='9999-01-01'
+    and salaries.to_date ='9999-01-01'
+    --当前限定
+    and dept_emp.emp_no not in
+        (select emp_no from dept_manager where dept_manager.to_date='9999-01-01')
+        --用子查询
