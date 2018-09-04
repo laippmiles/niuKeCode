@@ -33,6 +33,6 @@ from employees a
     inner join salaries c
     on a.emp_no = c.emp_no and c.from_date = a.hire_date
 
---多重联立中间的表也可以取别名拿来用
+--多重联立出来的只是“过滤结果”，所以表依旧是表的别名
 --inner join是过滤掉有Null的项的，left join则自动补足Null
 order by growth

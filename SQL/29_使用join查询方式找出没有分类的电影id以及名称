@@ -1,0 +1,26 @@
+/*
+CREATE TABLE IF NOT EXISTS film (
+film_id smallint(5)  NOT NULL DEFAULT '0',
+title varchar(255) NOT NULL,
+description text,
+PRIMARY KEY (film_id));
+
+CREATE TABLE category  (
+category_id  tinyint(3)  NOT NULL ,
+name  varchar(25) NOT NULL, `last_update` timestamp,
+PRIMARY KEY ( category_id ));
+
+CREATE TABLE film_category  (
+film_id  smallint(5)  NOT NULL,
+category_id  tinyint(3)  NOT NULL, `last_update` timestamp);
+
+使用join查询方式找出没有分类的电影id以及名称
+*/
+
+
+select film.film_id,film.title
+from film left join film_category
+--联立查询是种查询，理解为过了这个查询条件后再去取原表符合条件的数据比较好
+on film.film_id = film_category.film_id
+where film_category.category_id is null
+--等于null要写成 is null，=null不认的
