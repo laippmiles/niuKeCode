@@ -1,0 +1,27 @@
+/*
+CREATE TABLE IF NOT EXISTS film (
+film_id smallint(5)  NOT NULL DEFAULT '0',
+title varchar(255) NOT NULL,
+description text,
+PRIMARY KEY (film_id));
+
+CREATE TABLE category  (
+category_id  tinyint(3)  NOT NULL ,
+name  varchar(25) NOT NULL, `last_update` timestamp,
+PRIMARY KEY ( category_id ));
+
+CREATE TABLE film_category  (
+film_id  smallint(5)  NOT NULL,
+category_id  tinyint(3)  NOT NULL, `last_update` timestamp);
+
+使用子查询的方式找出属于Action分类的所有电影对应的title,description
+*/
+
+select film.title,film.description
+from film
+--重点在于要用子查询
+--那就只能通过film_id在film_category的关系啦╮(╯▽╰)╭
+where film.film_id in
+(select film_id from category,film_category
+where category.category_id = film_category.category_id
+and name = 'Action')

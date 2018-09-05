@@ -1,0 +1,19 @@
+/*
+对于表actor批量插入如下数据
+CREATE TABLE IF NOT EXISTS actor (
+actor_id smallint(5) NOT NULL PRIMARY KEY,
+first_name varchar(45) NOT NULL,
+last_name varchar(45) NOT NULL,
+last_update timestamp NOT NULL DEFAULT (datetime('now','localtime')))
+
+
+actor_id	    first_name	    last_name   	last_update
+1	            PENELOPE	      GUINESS	      2006-02-15 12:34:33
+2	              NICK	        WAHLBERG	     2006-02-15 12:34:33
+*/
+
+insert into actor values
+(1,'PENELOPE','GUINESS','2006-02-15 12:34:33'),
+(2,'NICK','WAHLBERG','2006-02-15 12:34:33')
+--还是加into吧，好像mysql没into也行
+--批量插入的话，加个逗号就行
