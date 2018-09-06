@@ -34,7 +34,10 @@ class Solution:
             for i in range(n):
                 p2 = p2.next
         while p1 and p2:
-            if p1.val == p2.val:
+            if p1 == p2:
+                #对！对比值在OJ也能过！
+                #可是在面试敢这么搞会死的！！！！！！
+                #对比整个节点啊傻逼！
                 return p1
             p1 = p1.next
             p2 = p2.next
