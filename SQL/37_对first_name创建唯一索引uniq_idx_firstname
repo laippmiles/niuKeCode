@@ -1,0 +1,45 @@
+/*
+针对如下表actor结构创建索引：
+CREATE TABLE IF NOT EXISTS actor (
+actor_id smallint(5) NOT NULL PRIMARY KEY,
+first_name varchar(45) NOT NULL,
+last_name varchar(45) NOT NULL,
+last_update timestamp NOT NULL DEFAULT (datetime('now','localtime')))
+对first_name创建唯一索引uniq_idx_firstname，对last_name创建普通索引idx_lastname
+*/
+
+create unique index uniq_idx_firstname on actor(first_name);
+create index idx_lastname on actor(last_name);
+
+--索引：
+
+/*
+1.MySQL都有哪些索引类型呢？
+
+mysql提供多种索引类型供选择：普通索引，唯一索引，主键
+
+全文索引，单列索引，与多列索引
+
+2.普通索引
+
+普通索引的唯一任务是加快对数据的访问速度，
+因此，应该只为那些最经常出现在查询条件（WHERE column=）
+或者排序条件（ORDERBY column）中的数据列创建索引
+
+3.主键
+
+必须为主键字段创建一个索引，这个Mysql索引就是所谓的“主索引”。
+主索引与唯一索引的唯一区别是：前者在定义时使用的关键字是PRIMARY而不是UNIQUE
+
+4.唯一性索引
+
+如果确定某个数据列只包含彼此各不相同的值，
+在为这个数据列创建索引的时候，就应该用关键字UNIQUE把它定义为一个唯一索引，
+Mysql会在有新纪录插入数据表时，自动检查新纪录的这个字段的值是否已经在某个记录的这个字段里出现过了。
+如果是，mysql将拒绝插入那条新纪录。也就是说，唯一索引可以保证数据记录的唯一性。
+事实上在许多场合，人们创建唯一索引的目的往往不是为了提高访问速度，而只是为了避免数据出现重复
+
+作者：素履之往_3e36
+链接：https://www.jianshu.com/p/dd4fe101cffe
+來源：简书
+*/
