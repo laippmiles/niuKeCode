@@ -1,0 +1,27 @@
+/*
+构造一个触发器audit_log，在向employees_test表中插入一条数据的时候，
+触发插入相关的数据到audit中。
+
+CREATE TABLE employees_test(
+ID INT PRIMARY KEY NOT NULL,
+NAME TEXT NOT NULL,
+AGE INT NOT NULL,
+ADDRESS CHAR(50),
+SALARY REAL
+);
+
+CREATE TABLE audit(
+EMP_no INT NOT NULL,
+NAME TEXT NOT NULL
+);
+*/
+
+create trigger audit_log after insert on employees_test
+begin
+    insert into audit values(new.ID,new.NAME);
+end
+--创建触发器使用语句：CREATE TRIGGER trigname;
+--指定触发器触发的事件在执行某操作之前还是之后，使用语句：BEFORE/AFTER [INSERT/UPDATE/ADD] ON tablename
+--触发器触发的事件写在BEGIN和END之间；
+--触发器中可以通过NEW获得触发事件之后2对应的tablename的相关列的值，
+-- OLD获得触发事件之前的2对应的tablename的相关列的值
