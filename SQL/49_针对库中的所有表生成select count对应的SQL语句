@@ -1,0 +1,60 @@
+/*
+题目描述
+针对库中的所有表生成select count(*)对应的SQL语句
+
+CREATE TABLE `employees` (
+`emp_no` int(11) NOT NULL,
+`birth_date` date NOT NULL,
+`first_name` varchar(14) NOT NULL,
+`last_name` varchar(16) NOT NULL,
+`gender` char(1) NOT NULL,
+`hire_date` date NOT NULL,
+PRIMARY KEY (`emp_no`));
+
+create table emp_bonus(
+emp_no int not null,
+recevied datetime not null,
+btype smallint not null);
+CREATE TABLE `dept_emp` (
+`emp_no` int(11) NOT NULL,
+`dept_no` char(4) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `dept_manager` (
+`dept_no` char(4) NOT NULL,
+`emp_no` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+输出格式:
+cnts
+select count(*) from employees;
+select count(*) from departments;
+select count(*) from dept_emp;
+*/
+
+select 'select count(*) from ' || name || ';' as cnts
+from sqlite_master where type = 'table'
+
+--sqllite里有一个SQLITE_MASTER 的系统表
+/*
+SQLITE_MASTER 表看起来如下：
+CREATE TABLE sqlite_master (
+type TEXT,
+name TEXT,
+tbl_name TEXT,
+rootpage INTEGER,
+sql TEXT
+);
+对于表来说，type 字段永远是 ‘table’，name 字段永远是表的名字。
+*/
