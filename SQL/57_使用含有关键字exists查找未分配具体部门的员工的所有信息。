@@ -1,0 +1,31 @@
+/*
+使用含有关键字exists查找未分配具体部门的员工的所有信息。
+CREATE TABLE `employees` (
+`emp_no` int(11) NOT NULL,
+`birth_date` date NOT NULL,
+`first_name` varchar(14) NOT NULL,
+`last_name` varchar(16) NOT NULL,
+`gender` char(1) NOT NULL,
+`hire_date` date NOT NULL,
+PRIMARY KEY (`emp_no`));
+CREATE TABLE `dept_emp` (
+`emp_no` int(11) NOT NULL,
+`dept_no` char(4) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+
+
+emp_no	birth_date	first_name	last_name	gender	hire_date
+10011	  1953-11-07	 Mary	       Sluis	   F	   1990-01-22
+*/
+
+select * from employees where not exists
+(select emp_no from dept_emp where employees.emp_no = dept_emp.emp_no)
+--考察exists的运用
+
+/*
+本题用 EXISTS 关键字的方法如下：意为在 employees 中挑选出令
+(SELECT emp_no FROM dept_emp WHERE emp_no = employees.emp_no)不成立的记录，
+也就是当 employees.emp_no=10011的时候。
+*/

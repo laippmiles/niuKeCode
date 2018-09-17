@@ -1,0 +1,12 @@
+/*
+获取所有员工的emp_no、部门编号dept_no以及对应的bonus类型btype和recevied，
+没有分配具体的员工不显示
+
+有表dept_emp、emp_bonus
+*/
+
+--该题目中的dept_manager 表和salaries表不会用到，并且缺了一个 emp_bonus 表
+select dept_emp.emp_no,dept_emp.dept_no,emp_bonus.btype,emp_bonus.recevied
+from dept_emp left join emp_bonus
+on dept_emp.emp_no = emp_bonus.emp_no
+--练左联结的题，出题人傻逼

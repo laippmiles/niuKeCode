@@ -1,0 +1,17 @@
+/*
+题目描述
+查找排除当前最大、最小salary之后的员工的平均工资avg_salary。
+CREATE TABLE `salaries` ( `emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+*/
+
+select avg(salary) avg_salary
+from salaries
+where salary not in (select max(salary) from salaries)
+    and salary not in (select min(salary) from salaries)
+    and to_date = '9999-01-01'
+
+--记住加当前

@@ -1,0 +1,16 @@
+/*
+分页查询employees表，每5行一页，返回第2页的数据
+CREATE TABLE `employees` (
+`emp_no` int(11) NOT NULL,
+`birth_date` date NOT NULL,
+`first_name` varchar(14) NOT NULL,
+`last_name` varchar(16) NOT NULL,
+`gender` char(1) NOT NULL,
+`hire_date` date NOT NULL,
+PRIMARY KEY (`emp_no`));
+*/
+
+select * from employees limit 5,5
+--在 LIMIT X,Y 中，
+-- X代表从第几条记录开始返回（第一条记录序号为0）
+-- Y代表返回几条记录，切勿记反。
