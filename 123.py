@@ -1,23 +1,16 @@
-while 1:
-    a=[]
-    s = input()
-    if s != "":
-        a.append(int(s))
-        for i in range(2):
-            s = input()
-            if s != "":
-                for x in s.split():
-                    a.append(int(x))
-        year = a[0]
-        month = a[1]
-        day = a[2]
-        print(a)
-        monthperday = [31,28,31,30,31,30,31,31,30,31,30]
-        if (year%4 == 0 and year % 100 != 0) and year % 400 ==0:
-            monthperday[1] = 29
-        count = day
-        for i in range(month):
-            count += monthperday[i]
-        print('This day is the first year of the year is: the '+ str(count)+' day')
-    else:
-        break
+def fun1(fun):
+    print('fun1 action')
+    def func(*args,**kwargs):
+        print(args)
+        print(kwargs)
+        print('fun3 action')
+    return func
+    #这也可以看出装饰器的一个作用，直接调用fun2是会报错的，可是这个程序现在能跑
+
+@fun1
+def fun2(a,b,c,d,e):
+    print('fun2 action',e,d)
+
+
+if __name__ == '__main__':
+    fun2(1,2,3)
